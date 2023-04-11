@@ -12,8 +12,9 @@ if(isset($_POST['operacion'])){
     // Enviar los datos a la vista
     //Si contiene informacion, si no esta vacio... 
     if ($data){
+      echo"<option value='' selected>Seleccione</option>";
       foreach($data as $registro){
-        echo "<opction value = '{$registro['idsede']}'>{$registro['sede']}</opction>"
+        echo "<option value = '{$registro['idsede']}'>{$registro['sede']}</option>";
       }
     }else{
       echo "<option value= ''>No encontramos datos</option>";

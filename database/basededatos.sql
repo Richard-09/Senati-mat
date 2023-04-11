@@ -60,7 +60,7 @@ INSERT INTO sedes (sede) VALUES
 
 CREATE TABLE estudiantes (
   idestudiante 		INT AUTO_INCREMENT PRIMARY KEY,
-  apellidos 		VARCHAR (40) NOT NULL,
+  apellidos 		VARCHAR (40) NOT NULL, 
   nombres 			VARCHAR (40) NOT NULL,
   tipodocumento 	CHAR(1) NOT NULL DEFAULT 'D',
   nrodocumento 		CHAR(8) NOT NULL,

@@ -16,13 +16,13 @@
 <body>
   
   <!-- Modal trigger button -->
-  <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalId">
+  <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modal-estudiante">
     Registro
   </button>
   
   <!-- Modal Body -->
   <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal fade" id="modal-estudiante" tabindex="-1" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header text-bg-secondary">
@@ -31,7 +31,7 @@
         </div>
         <div class="modal-body">
 
-        <form action="" autocomplete="off">
+        <form action="" autocomplete="off" id="formulario-estudiantes">
           <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="apellidos" class="form-label">Apellidos</label>
@@ -100,11 +100,6 @@
   </div>
   
   
-  <!-- Optional: Place to the bottom of scripts -->
-  <script>
-    const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
-  
-  </script>
 
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -114,6 +109,71 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
   </script>
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function (){
+
+      function obtenerSedes(){
+        $.ajax({
+          url: '../controllers/sede.controller.php',
+          type: 'POST',
+          data: {operacion: 'listar'},
+          dataType: 'text',
+          success: function(result){
+            $("#sede").html(result);
+          }
+
+        });
+      }
+
+
+      function obtenerEscuelas(){
+        $.ajax({
+          url: '../controllers/escuela.controller.php',
+          type: 'POST',
+          data: {operacion: 'listar'},
+          dataType: 'text',
+          success: function(result){
+            $("#escuela").html(result);
+          }
+
+        });
+      }
+
+
+      //Al cambiar una escuela, se actualizará las carreras
+      $("#escuela").change(function (){
+        const idescuela = $(this).val();
+
+        $.ajax({
+          url: '../controllers/carrera.controller.php',
+          type: 'POST',
+          data: {
+            operacion     :'listar',
+            idescuela     : idescuelaFiltro  
+          },
+          dataType        : 'text',
+          success         : function(result){
+            $("#carrera").html(result);
+          }     
+        })
+      });
+
+      //Predeterminamos un control dentro del modal
+      $("#modal-estudiante").on("shown.bs.modal", event => {
+        $("#apellidos").focus();
+
+        //EVENTOS
+        obtenerSedes();
+        obtenerEscuelas();
+      });
+
+    });
+  </script>
+
 </body>
 
 </html>

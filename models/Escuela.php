@@ -14,9 +14,9 @@ class Escuela extends Conexion{
     try{
       $consulta = $this->accesoBD->prepare("CALL spu_escuelas_listar()");
       $consulta->execute();
-      return $consulta->fetchAll(PDO::FETCH_ASSOC)
+      return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch(Exceptionm $e){
+    catch(Exception $e){
       die($e->getMessage());
     }
   }

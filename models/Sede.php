@@ -16,7 +16,7 @@ class Sede extends Conexion{
       $consulta->execute();
       return $consulta->FetchAll(PDO::FETCH_ASSOC);
     }
-    catch(Exceptionm $e){
+    catch(Exception $e){
       die($e->getMessage());
     }
   }
