@@ -14,7 +14,7 @@ class Carrera extends Conexion{
     try{
       $consulta = $this->accesoBD->prepare("CALL spu_carreras_listar(?)");
       $consulta->execute(array($idescuela));
-      return $consulta->fetchAll(pdo::fetch_assoc);
+      return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(Exceptionm $e){
       die($e->getMessage());

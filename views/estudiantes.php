@@ -93,7 +93,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-primary" id="guardar-estudiante">Guardar</button>
         </div>
       </div>
     </div>
@@ -112,6 +112,10 @@
 
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+  <!--Sweet alert-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
   <script>
     $(document).ready(function (){
@@ -143,10 +147,30 @@
         });
       }
 
+      function registrarEstudiante(){
+        Swal.fire({
+          icon: 'question',
+          title: 'Matriculas',
+          text:'¿Estas seguro de registrar al estudiante?',
+          footer: 'Desarrollado con PHP',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#EE8509',
+          showCancelButton: true,
+          calcelButtonText: 'Cancelar'
+        }).then((result) => {
+          //Identificando la acción del usuario
+          if(result.isConfirmed){
+            console.log("Guardando datos...");
+          }
+        });
+      }
+      $("#guardar-estudiante").click(registrarEstudiante);
+
+
 
       //Al cambiar una escuela, se actualizará las carreras
       $("#escuela").change(function (){
-        const idescuela = $(this).val();
+        const idescuelaFiltro = $(this).val();
 
         $.ajax({
           url: '../controllers/carrera.controller.php',
