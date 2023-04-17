@@ -82,4 +82,4 @@ INSERT INTO estudiantes (apellidos, nombres, nrodocumento, fechanacimiento, idca
 ('Perez', 'Roxana', '88881111', '2001-03-03', 7, 3),
 ('Quintana', 'Tania', '33334444', '2001-05-05', 9, 4);
 
-SELECT * FROM estudiantes;
+SELECT * FROM carreras;
