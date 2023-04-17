@@ -31,7 +31,7 @@
         </div>
         <div class="modal-body">
 
-        <form action="" autocomplete="off" id="formulario-estudiantes">
+        <form action="" autocomplete="off" id="formulario-estudiantes" enctype="multipart/form-data">
           <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="apellidos" class="form-label">Apellidos</label>
@@ -88,7 +88,7 @@
 
               <div class="mb-3">
               <label for="fotografia" class="form-label">Fotografía:</label>
-              <input type="file" class="form-control form-control-sm" id="fotografia">
+              <input type="file" id="fotografia" accept=".jpg" class="form-control form-control-sm" >
             </div>
 
         </form>
@@ -162,6 +162,8 @@
         formData.append("fechanacimiento", $("#fechanacimiento").val());
         formData.append("idcarrera", $("#carrera").val());
         formData.append("idsede", $("#sede").val());
+        formData.append("fotografia", $("#fotografia")[0].files[0]);
+      
 
         $.ajax({
           url: '../controllers/estudiante.controller.php',
@@ -171,7 +173,9 @@
           processData: false,
           cache: false,
           success: function(){
-            console.log("Grabado correctamente");
+            $("#formulario-estudiantes")[0].reset();
+            $("#modal-estudiante").modal("hide");
+            alert("Guardando correctamente");
           }
         });
       }

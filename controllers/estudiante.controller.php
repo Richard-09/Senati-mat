@@ -21,6 +21,20 @@ if(isset($_POST['operacion'])) {
       "fotografia"         => ''
     ];
 
+    //Vamos a verficar si la vista nos envió una FOTOGRAFIA // NO GUARDAMOS LA IMAGEN SI NO LA RUTA
+    if (isset($_FILES['fotografia'])){
+
+      $rutaDestino = '../views/img/fotografias/';
+      $fechaActual = date('c'); //C = complete, AÑO/MES/DIA/MINUTO/SEGUNDO
+      $nombreArchivo = sha1($fechaActual) . ".jpg";
+      $rutaDestino .= $nombreArchivo;
+
+      //Guardamos la fotografia en el servidor
+      if (move_uploaded_file($_FILES['fotografia']['tmp_name'], $rutaDestino)){
+        $datosGuardar['fotografia'] = $nombreArchivo;
+      }
+    }
+
 
     //PASO 2: Enviar el array al método registrar 
     $estudiante->registrarEstudiante($datosGuardar);
