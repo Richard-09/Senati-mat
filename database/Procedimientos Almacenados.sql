@@ -70,6 +70,11 @@ BEGIN
 		FROM carreras 
 		WHERE idescuela = _idescuela;
 END$$
-CALL spu_carreras_listar(1);
+CALL spu_estudiantes_listar();
+
+UPDATE estudiantes
+	SET fotografia = NULL
+	WHERE fotografia = 'unafoto.jpg' OR
+			fotografia = '';
 
 
