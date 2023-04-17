@@ -48,6 +48,8 @@
               <label for="tipodocumento" class="form-label">Tipo Documento:</label>
               <select id="tipodocumento" class="form-select form-select-sm">
                 <option value="">Seleccione</option>
+                <option value="D">DNI</option>
+                <option value="C">Carnet de Extranjería</option>
               </select>
               </div>
               <div class="mb-3 col-md-6">
@@ -148,6 +150,34 @@
       }
 
       function registrarEstudiante(){
+        //Enviaremos los datos dentro de un OBJETO
+        //Para adjuntar algún archico multimedia(se conoce como BINARIO) se hace con formData:
+        var formData = new FormData();
+
+        formData.append("operacion", "registrar");
+        formData.append("apellidos", $("#apellidos").val());
+        formData.append("nombres", $("#nombres").val());
+        formData.append("tipodocumento", $("#tipodocumento").val());
+        formData.append("nrodocumento", $("#nrodocumento").val());
+        formData.append("fechanacimiento", $("#fechanacimiento").val());
+        formData.append("idcarrera", $("#carrera").val());
+        formData.append("idsede", $("#sede").val());
+
+        $.ajax({
+          url: '../controllers/estudiante.controller.php',
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          cache: false,
+          success: function(){
+            console.log("Grabado correctamente");
+          }
+        });
+      }
+
+
+      function preguntarRegistro(){
         Swal.fire({
           icon: 'question',
           title: 'Matriculas',
@@ -156,19 +186,20 @@
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#EE8509',
           showCancelButton: true,
-          calcelButtonText: 'Cancelar'
+          cancelButtonText: 'Cancelar'
         }).then((result) => {
           //Identificando la acción del usuario
           if(result.isConfirmed){
-            console.log("Guardando datos...");
+              registrarEstudiante();
           }
         });
       }
-      $("#guardar-estudiante").click(registrarEstudiante);
+    
+      $("#guardar-estudiante").click(preguntarRegistro);
 
 
 
-      //Al cambiar una escuela, se actualizará las carreras
+      //Al cambiar una escuela, se actualizarán las carreras
       $("#escuela").change(function (){
         const idescuelaFiltro = $(this).val();
 

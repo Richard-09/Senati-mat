@@ -8,7 +8,7 @@ class Escuela extends Conexion{
 
   public function __CONSTRUCT(){
     $this->accesoBD = parent::getConexion();
-  }
+  } 
 
   public function listarEscuelas(){
     try{
