@@ -2,18 +2,18 @@
 
 require_once 'Conexion.php';
 
-class Carrera extends Conexion{
+class Cargo extends Conexion{
 
   private $accesoBD;
 
   public function __CONSTRUCT(){
     $this->accesoBD = parent::getConexion();
-  }
+  } 
 
-  public function listarCarreras($idescuela = 0){
+  public function listarCargo(){
     try{
-      $consulta = $this->accesoBD->prepare("CALL spu_carreras_listar(?)");
-      $consulta->execute(array($idescuela));
+      $consulta = $this->accesoBD->prepare("CALL spu_cargos_listar()");
+      $consulta->execute();
       return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(Exception $e){

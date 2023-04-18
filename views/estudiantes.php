@@ -11,33 +11,54 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="../dist/lightbox2/src/css/lightbox.css">
+
+
+
 </head>
 
 <body>
   
-  <!-- Modal trigger button -->
-  <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modal-estudiante">
-    Registro
-  </button>
-
-  <div class="container">
-    <table id="tabla-estudiantes" class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Apellidos</th>
-          <th>Nombres</th>
-          <th>Tipo</th>
-          <th>Documento</th>
-          <th>Nacimiento</th>
-          <th>Carrera</th>
-          <th>Operaciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-      </tbody>
-    </table>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-light">
+        <div class="row">
+            <div class="col-md-6">
+              <strong>Lista de Estudiantes</strong>
+            </div>
+            <div class="col-md-6 text-end">
+            <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#modal-estudiante">Registrar</button>
+            </div>
+          </div>
+      </div>
+      <div class="card-body">
+        <div class="container mt-3">
+          <table id="tabla-estudiantes" class="table table-striped table-sm text-center">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Tipo</th>
+                <th>Documento</th>
+                <th>Nacimiento</th>
+                <th>Carrera</th>
+                <th>Operaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer text-end">
+        <a class="btn btn-outline-primary btn-sm" href="./colaboradores.php">Colaboradores</a>
+      </div>
+    </div>
   </div>
   
   <!-- Modal Body -->
@@ -138,6 +159,8 @@
   <!--Sweet alert-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <!-- Lightbox JS -->
+  <script src="../dist/lightbox2/src/js/lightbox.js"></script>
 
   <script>
     $(document).ready(function (){
@@ -154,7 +177,6 @@
 
         });
       }
-
 
       function obtenerEscuelas(){
         $.ajax({
@@ -200,7 +222,6 @@
         });
       }
 
-
       function preguntarRegistro(){
         Swal.fire({
           icon: 'question',
@@ -220,8 +241,6 @@
       }
     
       $("#guardar-estudiante").click(preguntarRegistro);
-
-
 
       //Al cambiar una escuela, se actualizarán las carreras
       $("#escuela").change(function (){
@@ -249,6 +268,20 @@
         obtenerSedes();
         obtenerEscuelas();
       });
+
+      function mostrarEstudiantes(){
+        $.ajax({
+          url: '../controllers/estudiante.controller.php',
+          type: 'POST',
+          data: {operacion: 'listar'},
+          dataType: 'text',
+          success: function(result){
+            $("#tabla-estudiantes tbody").html(result);
+          }
+        });
+      }
+
+      mostrarEstudiantes();
 
     });
   </script>

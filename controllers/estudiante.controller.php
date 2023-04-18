@@ -41,4 +41,49 @@ if(isset($_POST['operacion'])) {
 
   }
 
+
+
+
+
+if ($_POST['operacion']=='listar'){
+  $data = $estudiante->listarEstudiante();
+    if ($data){
+      $numeroFila = 1;
+      $botonNulo = " <a href='#' class='btn btn-sm btn-outline-primary' title='No tiene fotografía'><i class='bi bi-eye-slash-fill'></i></a>";
+      foreach($data as $registro){
+        $datosEstudiante = $registro['apellidos']. ' ' . $registro['nombres'];
+        echo "
+          <tr>
+            <td>{$numeroFila}</td>,
+            <td>{$registro['apellidos']}</td>
+            <td>{$registro['nombres']}</td>
+            <td>{$registro['tipodocumento']}</td>
+            <td>{$registro['nrodocumento']}</td>
+            <td>{$registro['fechanacimiento']}</td>
+            <td>{$registro['carrera']}</td>
+            <td>
+              <a href='#' class='btn btn-sm btn-outline-success' title='Editar'><i class='bi bi-pencil'></i></a>           
+              <a href='#' class='btn btn-sm btn-outline-danger'title='Eliminar'><i class='bi bi-trash'></i></a>
+            
+        ";
+
+        //La segunda parte a Renderizar, es el boton VER FOTOGRAFIA
+        if ($registro['fotografia']== ''){
+          echo $botonNulo;
+        }else{
+          echo "<a href='../views/img/fotografias/{$registro['fotografia']}' data-lightbox='{$registro['idestudiante']}' data-title='{$datosEstudiante}' class='btn btn-sm btn-outline-primary'title='ver'><i class='bi bi-eye-fill'></i></a>";
+        }
+
+        //La tercera parte a RENDERIZAR,cierre de la fila
+        echo "
+            </td>
+          </tr>
+        ";
+        
+        $numeroFila++;
+      }
+    }
+}
+
+
 }
